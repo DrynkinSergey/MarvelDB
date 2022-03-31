@@ -5,61 +5,61 @@ import MarvelService from "../../services/MarvelService";
 
 class CharList extends Component {
     state = {
-        chars:null,
-        offset:300
+        chars: null,
+        offset: 300
     }
     marvelService = new MarvelService();
 
     updateChars = () => {
         this.marvelService.getAllCharacters()
             .then(
-            res => this.setState(( state)=>{
-                return {
-                    chars: res
-                }
-            })
-        )
+                res => this.setState((state) => {
+                    return {
+                        chars: res
+                    }
+                })
+            )
     }
     onLoadChars = () => {
 
         this.marvelService.getAllCharacters(this.state.offset).then(
-            res => this.setState(( {chars,offset})=>{
+            res => this.setState(({chars, offset}) => {
                 return {
-                   chars: [...chars,...res],
-                    offset: offset+50
+                    chars: [...chars, ...res],
+                    offset: offset + 50
                 }
             })
         )
     }
+    onCharSelect = (id) => {
+       this.props.onCharSelected(id);
+    }
     createChars = () => {
         const charsData = this.state.chars.map(char => {
-            return(
-                <li className="char__item">
+            return (
+                <li   className="char__item">
                     <img src={abyss} alt="abyss"/>
                     <div className="char__name">Abyss</div>
                 </li>
             )
         })
-        console.log(this.state);
-        console.log(charsData);
-
     }
+
     componentDidMount() {
         this.updateChars();
-
     }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
     }
-
 
     render() {
         const {chars} = this.state;
         let charsData;
-        if(chars){
-             charsData = this.state.chars.map(char => {
-                return(
-                    <li key={char.id} className="char__item">
-                        <img style={{objectFit:"contain"}} src={char.thumbnail} alt="abyss"/>
+        if (chars) {
+            charsData = this.state.chars.map(char => {
+                return (
+                    <li onClick={()=>this.onCharSelect(char.id)} key={char.id} className="char__item">
+                        <img style={{objectFit: "contain"}} src={char.thumbnail} alt="abyss"/>
                         <div className="char__name">{char.name}</div>
                     </li>
                 )
