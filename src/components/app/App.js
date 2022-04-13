@@ -2,7 +2,7 @@ import AppHeader from "../appHeader/AppHeader";
 import RandomChar from "../randomChar/RandomChar";
 import CharList from "../charList/CharList";
 import CharInfo from "../charInfo/CharInfo";
-
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 import decoration from '../../resources/img/vision.png';
 import {Component} from "react";
 
@@ -25,7 +25,9 @@ class App extends Component {
                     <RandomChar/>
                     <div className="char__content">
                         <CharList onCharSelected={this.onSelectedChar}/>
-                        <CharInfo selectedChar={this.state.selectedChar}/>
+                       <ErrorBoundary>
+                           <CharInfo selectedChar={this.state.selectedChar}/>
+                       </ErrorBoundary>
                     </div>
                     <img className="bg-decoration" src={decoration} alt="vision"/>
                 </main>

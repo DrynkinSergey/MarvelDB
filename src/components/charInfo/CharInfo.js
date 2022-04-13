@@ -1,8 +1,6 @@
 import './charInfo.scss';
-import thor from '../../resources/img/thor.jpeg';
 import MarvelService from "../../services/MarvelService";
 import {useEffect, useState} from "react";
-import {logDOM} from "@testing-library/react";
 
 const CharInfo = (props) => {
     const [char, setChar] = useState({})
@@ -23,7 +21,7 @@ const CharInfo = (props) => {
         )
     }, [props.selectedChar]);
 
-    const {name, description, id, thumbnail, homepage, wiki} = char;
+    const {name, description, thumbnail, homepage, wiki} = char;
     return (
         <div className="char__info">
             <div className="char__basics">
@@ -34,7 +32,7 @@ const CharInfo = (props) => {
                         <a href={homepage} className="button button__main">
                             <div className="inner">homepage</div>
                         </a>
-                        <a href={wiki} className="button button__secondary">
+                        <a target='_blank' href={wiki} className="button button__secondary">
                             <div className="inner">Wiki</div>
                         </a>
                     </div>
