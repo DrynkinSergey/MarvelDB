@@ -4,7 +4,6 @@ import {useEffect, useState} from "react";
 
 const CharInfo = (props) => {
     const [char, setChar] = useState({})
-    const [comics, setComics] = useState({})
     const marvelService = new MarvelService();
     useEffect(() => {
         marvelService.getCharacterBio(1011334).then(
