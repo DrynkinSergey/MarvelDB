@@ -1,39 +1,31 @@
-class MarvelService {
-    _apiBase = 'https://gateway.marvel.com:443/v1/public/';
-    _apiKey = 'apikey=3839aab5cda235b2a0d9aeb4e2224543';
+import {useHttp} from "../hooks/http.hook";
 
-    getResource = async (url) => {
-            let res = await fetch(url);
-            return await res.json();
-    }
+const useMarvelService = () => {
+    const {loading, request, error, clearError} = useHttp();
 
-    getAllCharacters = async (offset) => {
-        const res = await this.getResource(`${this._apiBase}characters?limit=9&offset=${offset}&${this._apiKey}`);
-        return res.data.results.map(this._transformCharacter);
+
+   const _apiBase = 'https://gateway.marvel.com:443/v1/public/';
+   const _apiKey = 'apikey=3839aab5cda235b2a0d9aeb4e2224543';
+
+
+
+   const getAllCharacters = async (offset) => {
+        const res = await request(`${_apiBase}characters?limit=9&offset=${offset}&${_apiKey}`);
+
+        return res.data.results.map(_transformCharacter);
     }
-    getCharacter = async (id) => {
-        const res = await this.getResource(`${this._apiBase}characters/${id}?${this._apiKey}`);
-        return this._transformCharacter(res.data.results[0]);
+   const getCharacter = async (id) => {
+        const res = await request(`${_apiBase}characters/${id}?${_apiKey}`);
+       if (res.code === 404) return
+       return _transformCharacter(res.data.results[0]);
     }
-    getCharacterBio = async (id) => {
+  const  getCharacterBio = async (id) => {
         if(!id) return
-        const res = await this.getResource(`${this._apiBase}characters/${id}?${this._apiKey}`);
-        return this._transformCharacterSelected(res.data.results[0]);
+        const res = await request(`${_apiBase}characters/${id}?${_apiKey}`);
+        return _transformCharacterSelected(res.data.results[0]);
     }
-    _transformCharacter = (char) => {
+   const _transformCharacter = (char) => {
       let description = !char.description ? `The ${char.name} has not description! Sorry...`:char.description;
-
-        return {
-            name: char.name,
-            description:(char.description < 177 ? description : description=description.slice(0,177)+'...'),
-            thumbnail: char.thumbnail.path + '.' + char.thumbnail.extension,
-            homepage: char.urls[0].url,
-            wiki: char.urls[1].url,
-            id:char.id
-        }
-    }
-    _transformCharacterSelected = (char) => {
-        let description = !char.description ? `The ${char.name} has not description! Sorry...`:char.description;
 
         return {
             name: char.name,
@@ -45,6 +37,22 @@ class MarvelService {
             comics:char.comics.items
         }
     }
+    const _transformCharacterSelected = (char) => {
+        let description = !char.description ? `The ${char.name} has not description! Sorry...`:char.description;
+
+        return {
+            name: char.name,
+            description:(char.description < 177 ? description : description=description.slice(0,177)+'...'),
+            thumbnail: char.thumbnail.path + '.' + char.thumbnail.extension,
+            homepage: char.urls[0].url,
+            wiki: char.urls[1].url,
+            id:char.id,
+
+        }
+    }
+    return{
+        loading, error, clearError,getCharacter,getAllCharacters
+    }
 }
 
-export default MarvelService;
+export default useMarvelService;

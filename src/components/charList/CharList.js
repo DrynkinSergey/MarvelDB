@@ -1,25 +1,25 @@
 import './charList.scss';
 import React, { useEffect, useState} from "react";
-import MarvelService from "../../services/MarvelService";
 import Spinner from "../spinner/spinner";
 import ErrorMessage from "../errorMessage/errorMessage";
+import useMarvelService from "../../services/MarvelService";
 
 const CharList = (props) => {
+
+    const {loading,error,getAllCharacters} = useMarvelService();
+
     const [state, setState] = useState(
         {
             chars: [],
-            loading: true,
-            error: false,
             newItemLoading: false,
             offset: 300
         }
     );
 
-    const marvelService = new MarvelService();
+
 
     const onRequest = () => {
-
-        marvelService.getAllCharacters(state.offset)
+        getAllCharacters(state.offset)
             .then(onCharListLoaded)
     }
 
@@ -29,7 +29,7 @@ const CharList = (props) => {
                 ...state,
                 chars: [...state.chars, ...newChars],
                 offset: state.offset + 9,
-                loading: false,
+
                 newItemLoading: false
             }
         )
@@ -86,18 +86,16 @@ const CharList = (props) => {
         )
 
     }
-
-    const {chars, loading, error} = state;
+    const {chars} = state
     const items = renderChars(chars);
     const errorMessage = error ? <ErrorMessage/> : null;
     const spinner = loading ? <Spinner/> : null;
-    const content = !(loading || error) ? items : null;
 
     return (
         <div className="char__list">
             {errorMessage}
             {spinner}
-            {content}
+            {items}
             <button onClick={onRequest} className="button button__main button__long">
                 <div className="inner">load more</div>
             </button>
