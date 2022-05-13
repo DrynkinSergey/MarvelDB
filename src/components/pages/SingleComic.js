@@ -8,16 +8,18 @@ import ErrorMessage from "../errorMessage/errorMessage";
 const SingleComic = () => {
     const {comicId} = useParams();
     const [comic, setComic] = useState(null);
-    const {error,loading,getComics,clearError} =  useMarvelService();
+    const {error,loading,getComic,clearError} =  useMarvelService();
 
 
     useEffect(() => {
-        updateComic(comicId)
+
+        updateComic()
+
     }, [comicId])
 
-    const updateComic = (comicId) => {
+    const updateComic = () => {
         clearError();
-        getComics(comicId)
+        getComic(comicId)
             .then(onComicLoaded)
     }
 
@@ -35,7 +37,6 @@ const SingleComic = () => {
             {spinner}
             {content}
         </>
-
     )
 }
 const View = ({comic}) => {

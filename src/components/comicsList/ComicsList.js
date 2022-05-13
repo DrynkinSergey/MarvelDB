@@ -12,7 +12,7 @@ const ComicsList = () => {
     }, [])
 
     const [comics, setComics] = useState([]);
-    const [offset, setOffset] = useState(234)
+    const [offset, setOffset] = useState(534)
     const onRequest = () => {
         getComics(offset)
             .then(onCharListLoaded)
