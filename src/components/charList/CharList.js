@@ -1,4 +1,5 @@
 import './charList.scss';
+import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import React, { useEffect, useState} from "react";
 import Spinner from "../spinner/spinner";
 import ErrorMessage from "../errorMessage/errorMessage";
@@ -60,8 +61,11 @@ const CharList = (props) => {
             if (char.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
                 imgStyle = {'objectFit': 'unset'};
             }
+
             return (
-                <li onClick={() => {
+                <CSSTransition key={i} timeout={500} classNames="char__item">
+                <li
+                    onClick={() => {
                     onCharSelect(char.id);
                     focusOnItem(i);
                 }}
@@ -77,11 +81,14 @@ const CharList = (props) => {
                     <img style={imgStyle} src={char.thumbnail} alt="abyss"/>
                     <div className="char__name">{char.name}</div>
                 </li>
+                </CSSTransition>
             )
         });
         return (
             <ul className="char__grid">
+                <TransitionGroup component={null}>
                 {items}
+                </TransitionGroup>
             </ul>
         )
 
