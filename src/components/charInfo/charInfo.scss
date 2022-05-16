@@ -1,10 +1,20 @@
 @import '../../style/variables.scss';
+.sticky
+{
+    position: -webkit-sticky !important;
+    position: sticky;
+    top: 15px;
+    background-color: yellow;
+    padding: 50px;
+    font-size: 20px;
 
+}
 .char {
     &__info {
+        border-radius: 10px;
+
         padding: 25px;
-        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
-        position: relative;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
         z-index: 5;
         background-color: #fff;
         &-name {
@@ -49,9 +59,9 @@
         }
         &-item {
             width: 100%;
-            padding: 0px 10px;
+            padding: 0 10px;
             line-height: 25px;
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
             margin-top: 10px;
         }
     }

@@ -16,7 +16,7 @@
         row-gap: 30px;
     }
     &__item {
-
+        border-radius: 10px;
         width: 200px;
         height: 318px;
         background-color: $dark;
@@ -24,6 +24,7 @@
         padding: 15px;
         cursor: pointer;
         transition: 0.3s transform;
+        overflow: hidden;
         img {
             width: 200px;
             height: 200px;

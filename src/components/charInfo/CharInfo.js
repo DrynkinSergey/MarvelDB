@@ -42,7 +42,7 @@ const CharInfo = (props) => {
     const content = !(loading || error || !char) ? <View char={char}/> : null;
 
     return (
-        <div className="char__info">
+        <div className="char__info sticky">
             {skeleton}
             {errorMessage}
             {spinner}
